@@ -1,0 +1,7 @@
+dbDevelopment:
+  username: "postgres"
+  password: "qwerty"
+  host: "localhost"
+  port: "5432"
+  dbname: "trackerdb"
+  sslmode: "disable"
