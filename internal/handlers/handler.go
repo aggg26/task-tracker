@@ -28,7 +28,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 
 		protected := api.Group("/protected", h.AuthMiddleware())
 		{
-			tasks := api.Group("/tasks")
+			tasks := protected.Group("/tasks")
 			{
 				tasks.GET("/", h.AllTasks)
 				tasks.GET("/:id", h.TaskById)

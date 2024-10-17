@@ -72,11 +72,11 @@ func (s *AuthService) GenerateJwt(form dtos.UserForm) (string, error) {
 }
 
 func (s *AuthService) ParseJwt(accessToken string) (int, error) {
-	token, err := jwt.ParseWithClaims(accessToken, CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
+	token, err := jwt.ParseWithClaims(accessToken, &CustomClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid signing method")
 		}
-		return secretKey, nil
+		return []byte(secretKey), nil
 	})
 	if err != nil {
 		return 0, err

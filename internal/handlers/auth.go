@@ -30,7 +30,7 @@ func (h *Handler) AuthMiddleware() gin.HandlerFunc {
 
 		userId, err := h.services.IAuthService.ParseJwt(tokenString)
 		if err != nil {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Неверный токен"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 			c.Abort()
 			return
 		}
@@ -61,7 +61,7 @@ func (h *Handler) GetUserId(c *gin.Context) (int, error) {
 // @Failure 400 {object} gin.H{"error": string}
 func (h *Handler) SignIn(c *gin.Context) {
 	var request dtos.UserForm
-	if err := c.ShouldBindJSON(request); err != nil {
+	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, "Invalid body request")
 		return
 	}
@@ -86,7 +86,7 @@ func (h *Handler) SignIn(c *gin.Context) {
 // @Router /signup [post]
 func (h *Handler) SignUp(c *gin.Context) {
 	var request dtos.UserForm
-	if err := c.ShouldBindJSON(request); err != nil {
+	if err := c.ShouldBindJSON(&request); err != nil {
 		c.JSON(http.StatusBadRequest, "Invalid body request")
 		return
 	}
